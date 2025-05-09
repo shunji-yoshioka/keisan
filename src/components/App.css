@@ -1,0 +1,323 @@
+@font-face {
+    font-family: 'Kosugi Maru';
+    src: url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+}
+
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Kosugi Maru', 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: clamp(24px, 5vw, 32px);
+}
+
+.menu {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 15px;
+}
+
+.difficulty-button {
+    display: block;
+    width: min(200px, 80%);
+    margin: 10px auto;
+    padding: 15px;
+    font-size: clamp(16px, 4vw, 18px);
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.difficulty-button:hover {
+    background-color: #45a049;
+}
+
+.game {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: clamp(16px, 4vw, 18px);
+}
+
+@media (min-width: 768px) {
+    .game-info {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.problem {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.problem h2 {
+    font-size: clamp(24px, 6vw, 32px);
+    margin-bottom: 20px;
+}
+
+.problem form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+    .problem form {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+.problem input {
+    padding: 12px;
+    font-size: clamp(16px, 4vw, 18px);
+    width: min(150px, 80%);
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.problem button {
+    padding: 12px 24px;
+    font-size: clamp(16px, 4vw, 18px);
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: min(150px, 80%);
+}
+
+@media (min-width: 480px) {
+    .problem button {
+        width: auto;
+    }
+}
+
+.problem button:hover {
+    background-color: #1976D2;
+}
+
+.game-over {
+    background-color: #f5f5f5;
+    padding: clamp(20px, 5vw, 30px);
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: min(400px, 90%);
+    text-align: center;
+}
+
+.game-over h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: clamp(24px, 5vw, 28px);
+}
+
+.final-score {
+    font-size: clamp(20px, 4vw, 24px);
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+.evaluation {
+    font-size: clamp(28px, 6vw, 36px);
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    border-radius: 15px;
+    display: inline-block;
+    animation: popIn 0.5s ease-out;
+}
+
+.evaluation.encourage {
+    color: #2196F3;
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.evaluation.good {
+    color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.evaluation.excellent {
+    color: #f44336;
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.game-over p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.rankings {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.rankings h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ranking-section {
+    margin-bottom: 20px;
+}
+
+.ranking-section h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.ranking-section ol {
+    list-style-position: inside;
+    padding: 0;
+}
+
+.ranking-section li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+@keyframes correctAnswer {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        background-color: #4CAF50;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+        background-color: #81C784;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        background-color: #4CAF50;
+    }
+}
+
+@keyframes wrongAnswer {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        background-color: #f44336;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+        background-color: #e57373;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        background-color: #f44336;
+    }
+}
+
+.answer-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: clamp(15px, 4vw, 20px) clamp(30px, 6vw, 40px);
+    border-radius: 10px;
+    color: white;
+    font-size: clamp(20px, 5vw, 24px);
+    font-weight: bold;
+    z-index: 1000;
+    pointer-events: none;
+    text-align: center;
+    width: min(300px, 80%);
+}
+
+.answer-feedback.correct {
+    animation: correctAnswer 1s ease-in-out forwards;
+}
+
+.answer-feedback.wrong {
+    animation: wrongAnswer 1s ease-in-out forwards;
+}
+
+/* タッチデバイス用の最適化 */
+@media (hover: none) {
+    .difficulty-button:active,
+    .problem button:active {
+        opacity: 0.8;
+    }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    .app {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+
+    h1 {
+        color: #ffffff;
+    }
+
+    .game {
+        background-color: #2d2d2d;
+    }
+
+    .game-over {
+        background-color: #2d2d2d;
+    }
+
+    .game-over h2 {
+        color: #ffffff;
+    }
+
+    .final-score {
+        color: #ffffff;
+    }
+
+    .problem input {
+        background-color: #3d3d3d;
+        color: #ffffff;
+        border-color: #4d4d4d;
+    }
+} 
