@@ -31,6 +31,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -108,6 +110,8 @@ h1 {
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .problem input {
@@ -119,6 +123,9 @@ h1 {
     text-align: center;
     -webkit-appearance: none;
     appearance: none;
+    background-color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .problem button {
@@ -241,17 +248,14 @@ h1 {
     0% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-        background-color: #4CAF50;
     }
     50% {
         transform: translate(-50%, -50%) scale(1.1);
         opacity: 1;
-        background-color: #81C784;
     }
     100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 0;
-        background-color: #4CAF50;
     }
 }
 
@@ -259,42 +263,42 @@ h1 {
     0% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-        background-color: #f44336;
     }
     50% {
         transform: translate(-50%, -50%) scale(1.1);
         opacity: 1;
-        background-color: #e57373;
     }
     100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 0;
-        background-color: #f44336;
     }
 }
 
 .answer-feedback {
     position: fixed;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: clamp(15px, 4vw, 20px) clamp(30px, 6vw, 40px);
     border-radius: 10px;
     color: white;
-    font-size: clamp(20px, 5vw, 24px);
+    font-size: clamp(24px, 6vw, 32px);
     font-weight: bold;
     z-index: 1000;
     pointer-events: none;
     text-align: center;
     width: min(300px, 80%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .answer-feedback.correct {
     animation: correctAnswer 1s ease-in-out forwards;
+    background-color: #4CAF50;
 }
 
 .answer-feedback.wrong {
     animation: wrongAnswer 1s ease-in-out forwards;
+    background-color: #f44336;
 }
 
 /* タッチデバイス用の最適化 */
@@ -363,6 +367,7 @@ h1 {
 
     .app {
         padding: 20px;
+        overflow-x: hidden;
     }
 
     .difficulty-button,
@@ -370,5 +375,11 @@ h1 {
     .problem button {
         width: 100%;
         padding: 25px;
+        max-width: 100%;
+    }
+
+    .answer-feedback {
+        top: 15%;
+        font-size: clamp(28px, 7vw, 36px);
     }
 } 
