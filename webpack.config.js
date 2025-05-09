@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: './src/renderer.tsx',
     target: 'web',
     devtool: 'source-map',
@@ -28,11 +28,14 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        fallback: {
+            "electron": false
+        }
     },
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/'
+        publicPath: './'
     },
     plugins: [
         new HtmlWebpackPlugin({

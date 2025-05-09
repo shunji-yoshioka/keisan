@@ -2,6 +2,7 @@
   "name": "keisan",
   "version": "1.0.0",
   "description": "計算ゲーム",
+  "homepage": "https://shunji-yoshioka.github.io/keisan",
   "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
