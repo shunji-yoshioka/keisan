@@ -35,36 +35,33 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
+// import isDev from 'electron-is-dev';
+const isDev = process.env.NODE_ENV === 'development' || process.argv.includes('--dev');
+let mainWindow = null;
 function createWindow() {
-    const win = new electron_1.BrowserWindow({
+    mainWindow = new electron_1.BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
         }
     });
-    // 開発環境では、webpack-dev-serverのURLを読み込む
-    if (process.env.NODE_ENV === 'development') {
-        win.loadURL('http://localhost:3000');
-    }
-    else {
-        // 本番環境では、ビルドされたHTMLファイルを読み込む
-        win.loadFile(path.join(__dirname, 'index.html'));
-    }
-    // 開発ツールを開く
-    win.webContents.openDevTools();
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    mainWindow.webContents.openDevTools();
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
 }
-// Electronの初期化が完了したらウィンドウを作成
 electron_1.app.whenReady().then(createWindow);
-// すべてのウィンドウが閉じられたらアプリを終了
 electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         electron_1.app.quit();
     }
 });
 electron_1.app.on('activate', () => {
-    if (electron_1.BrowserWindow.getAllWindows().length === 0) {
+    if (mainWindow === null) {
         createWindow();
     }
 });

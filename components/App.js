@@ -1,46 +1,9 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(require("react"));
-require("./App.css");
+import React, { useState, useEffect, useRef } from 'react';
+import NumberKeyboard from './NumberKeyboard';
+import './App.css';
 // 音声ファイルのインポート
-const correct_mp3_1 = __importDefault(require("../../public/sounds/correct.mp3"));
-const wrong_mp3_1 = __importDefault(require("../../public/sounds/wrong.mp3"));
+import correctSound from '../../public/sounds/correct.mp3';
+import wrongSound from '../../public/sounds/wrong.mp3';
 const DIFFICULTY_SETTINGS = {
     easy: { timeLimit: 30, maxNumber: 10, operations: ['+', '-'], scoreMultiplier: 1 },
     normal: { timeLimit: 30, maxNumber: 20, operations: ['+', '-', '*'], scoreMultiplier: 1.5 },
@@ -67,25 +30,25 @@ const getEvaluationMessage = (score) => {
     }
 };
 const App = () => {
-    const [gameState, setGameState] = (0, react_1.useState)({
+    const [gameState, setGameState] = useState({
         score: 0,
         timeLeft: 60,
         isPlaying: false,
         difficulty: 'normal',
         isGameOver: false
     });
-    const [currentProblem, setCurrentProblem] = (0, react_1.useState)(null);
-    const [userAnswer, setUserAnswer] = (0, react_1.useState)('');
-    const [feedback, setFeedback] = (0, react_1.useState)({
+    const [currentProblem, setCurrentProblem] = useState(null);
+    const [userAnswer, setUserAnswer] = useState('');
+    const [feedback, setFeedback] = useState({
         show: false,
         type: null,
         message: ''
     });
     // 音声の参照を作成
-    const correctAudio = (0, react_1.useRef)(new Audio(correct_mp3_1.default));
-    const wrongAudio = (0, react_1.useRef)(new Audio(wrong_mp3_1.default));
+    const correctAudio = useRef(new Audio(correctSound));
+    const wrongAudio = useRef(new Audio(wrongSound));
     // 音声の初期設定
-    (0, react_1.useEffect)(() => {
+    useEffect(() => {
         correctAudio.current.volume = 0.5;
         wrongAudio.current.volume = 0.5;
     }, []);
@@ -119,7 +82,7 @@ const App = () => {
         setCurrentProblem(generateProblem());
     };
     const handleAnswerSubmit = (e) => {
-        e.preventDefault();
+        e === null || e === void 0 ? void 0 : e.preventDefault();
         if (!currentProblem)
             return;
         const settings = DIFFICULTY_SETTINGS[gameState.difficulty];
@@ -154,7 +117,20 @@ const App = () => {
             setFeedback(prev => (Object.assign(Object.assign({}, prev), { show: false })));
         }, 1000);
     };
-    (0, react_1.useEffect)(() => {
+    const handleNumberClick = (num) => {
+        if (userAnswer.length < 4) {
+            setUserAnswer(prev => prev + num);
+        }
+    };
+    const handleDelete = () => {
+        setUserAnswer(prev => prev.slice(0, -1));
+    };
+    const handleSubmit = () => {
+        if (userAnswer) {
+            handleAnswerSubmit();
+        }
+    };
+    useEffect(() => {
         let timer;
         if (gameState.isPlaying && gameState.timeLeft > 0) {
             timer = setInterval(() => {
@@ -166,39 +142,43 @@ const App = () => {
         }
         return () => clearInterval(timer);
     }, [gameState.isPlaying, gameState.timeLeft]);
-    return (react_1.default.createElement("div", { className: "app" },
-        react_1.default.createElement("h1", null, "\u8A08\u7B97\u30B2\u30FC\u30E0"),
-        feedback.show && (react_1.default.createElement("div", { className: `answer-feedback ${feedback.type}` }, feedback.message)),
-        !gameState.isPlaying ? (react_1.default.createElement("div", { className: "menu" }, gameState.isGameOver ? (react_1.default.createElement("div", { className: "game-over" },
-            react_1.default.createElement("h2", null, "\u30B2\u30FC\u30E0\u7D42\u4E86\uFF01"),
-            react_1.default.createElement("p", { className: "final-score" },
+    return (React.createElement("div", { className: "app" },
+        React.createElement("h1", null, "\u8A08\u7B97\u30B2\u30FC\u30E0"),
+        feedback.show && (React.createElement("div", { className: `answer-feedback ${feedback.type}` }, feedback.message)),
+        !gameState.isPlaying ? (React.createElement("div", { className: "menu" }, gameState.isGameOver ? (React.createElement("div", { className: "game-over" },
+            React.createElement("h2", null, "\u30B2\u30FC\u30E0\u7D42\u4E86\uFF01"),
+            React.createElement("p", { className: "final-score" },
                 "\u6700\u7D42\u30B9\u30B3\u30A2: ",
                 gameState.score,
                 "\u70B9"),
             (() => {
                 const evaluation = getEvaluationMessage(gameState.score);
-                return (react_1.default.createElement("p", { className: `evaluation ${evaluation.className}` }, evaluation.message));
+                return (React.createElement("p", { className: `evaluation ${evaluation.className}` }, evaluation.message));
             })(),
-            react_1.default.createElement("button", { onClick: () => setGameState(prev => (Object.assign(Object.assign({}, prev), { isGameOver: false }))), className: "difficulty-button" }, "\u3082\u3046\u4E00\u5EA6\u3084\u308B"))) : (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("h2", null, "\u96E3\u6613\u5EA6\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044"),
-            Object.entries(DIFFICULTY_NAMES).map(([key, name]) => (react_1.default.createElement("button", { key: key, onClick: () => startGame(key), className: "difficulty-button" }, name))))))) : (react_1.default.createElement("div", { className: "game" },
-            react_1.default.createElement("div", { className: "game-info" },
-                react_1.default.createElement("p", null,
+            React.createElement("button", { onClick: () => setGameState(prev => (Object.assign(Object.assign({}, prev), { isGameOver: false }))), className: "difficulty-button" }, "\u3082\u3046\u4E00\u5EA6\u3084\u308B"))) : (React.createElement(React.Fragment, null,
+            React.createElement("h2", null, "\u96E3\u6613\u5EA6\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044"),
+            Object.entries(DIFFICULTY_NAMES).map(([key, name]) => (React.createElement("button", { key: key, onClick: () => startGame(key), className: "difficulty-button" }, name))))))) : (React.createElement("div", { className: "game" },
+            React.createElement("div", { className: "game-info" },
+                React.createElement("p", null,
                     "\u96E3\u6613\u5EA6: ",
                     DIFFICULTY_NAMES[gameState.difficulty]),
-                react_1.default.createElement("p", null,
+                React.createElement("p", null,
                     "\u6B8B\u308A\u6642\u9593: ",
                     gameState.timeLeft,
                     "\u79D2"),
-                react_1.default.createElement("p", null,
+                React.createElement("p", null,
                     "\u30B9\u30B3\u30A2: ",
                     gameState.score)),
-            currentProblem && (react_1.default.createElement("div", { className: "problem" },
-                react_1.default.createElement("h2", null,
+            currentProblem && (React.createElement("div", { className: "problem" },
+                React.createElement("h2", null,
                     currentProblem.question,
                     " = ?"),
-                react_1.default.createElement("form", { onSubmit: handleAnswerSubmit },
-                    react_1.default.createElement("input", { type: "number", value: userAnswer, onChange: (e) => setUserAnswer(e.target.value), placeholder: "\u7B54\u3048\u3092\u5165\u529B", autoFocus: true }),
-                    react_1.default.createElement("button", { type: "submit" }, "\u56DE\u7B54"))))))));
+                React.createElement("form", { onSubmit: (e) => {
+                        e.preventDefault();
+                        handleAnswerSubmit(e);
+                    } },
+                    React.createElement("input", { type: "text", value: userAnswer, onChange: (e) => setUserAnswer(e.target.value), readOnly: true, placeholder: "\u7B54\u3048\u3092\u5165\u529B" }),
+                    React.createElement("div", { className: "answer-display" }, userAnswer)),
+                React.createElement(NumberKeyboard, { onNumberClick: handleNumberClick, onDelete: handleDelete, onSubmit: handleSubmit })))))));
 };
-exports.default = App;
+export default App;
