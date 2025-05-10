@@ -2,9 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'production',
-    entry: './src/renderer.tsx',
-    target: 'web',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    entry: {
+        main: './src/main.ts',
+        renderer: './src/renderer.tsx'
+    },
+    target: {
+        main: 'electron-main',
+        renderer: 'electron-renderer'
+    },
     devtool: 'source-map',
     module: {
         rules: [
@@ -27,28 +33,28 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
         fallback: {
             "electron": false
         }
     },
     output: {
-        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: './'
+        filename: '[name].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: './public/index.html',
             filename: 'index.html',
+            chunks: ['renderer']
         }),
     ],
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'),
+            directory: path.join(__dirname, 'public')
         },
         compress: true,
-        port: 3000,
+        port: 8080,
         hot: true,
         historyApiFallback: true
     }

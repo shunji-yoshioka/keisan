@@ -2,25 +2,25 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 
 function createWindow() {
-    const win = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 900,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
-        }
+        },
+        resizable: false,
+        fullscreenable: false
     });
 
-    // 開発環境では、webpack-dev-serverのURLを読み込む
+    // 開発環境ではwebpack-dev-serverのURLを使用
     if (process.env.NODE_ENV === 'development') {
-        win.loadURL('http://localhost:3000');
+        mainWindow.loadURL('http://localhost:8080');
+        mainWindow.webContents.openDevTools();
     } else {
-        // 本番環境では、ビルドされたHTMLファイルを読み込む
-        win.loadFile(path.join(__dirname, 'index.html'));
+        // 本番環境ではローカルのHTMLファイルを読み込む
+        mainWindow.loadFile(path.join(__dirname, 'index.html'));
     }
-
-    // 開発ツールを開く
-    win.webContents.openDevTools();
 }
 
 // Electronの初期化が完了したらウィンドウを作成

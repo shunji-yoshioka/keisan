@@ -1,0 +1,85 @@
+.number-keyboard {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.keyboard-key {
+    flex: 1;
+    height: 60px;
+    font-size: 24px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.keyboard-key:active {
+    transform: scale(0.95);
+    background-color: #e0e0e0;
+}
+
+.delete-key {
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+.submit-key {
+    background-color: #2196F3;
+    color: white;
+    font-weight: bold;
+}
+
+.submit-key:active {
+    background-color: #1976D2;
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    .number-keyboard {
+        background-color: #2d2d2d;
+        border-top-color: #404040;
+    }
+
+    .keyboard-key {
+        background-color: #3d3d3d;
+        color: #ffffff;
+    }
+
+    .keyboard-key:active {
+        background-color: #4d4d4d;
+    }
+
+    .delete-key {
+        background-color: #4a2f2f;
+        color: #ff8a8a;
+    }
+
+    .submit-key {
+        background-color: #1976D2;
+    }
+
+    .submit-key:active {
+        background-color: #1565C0;
+    }
+} 

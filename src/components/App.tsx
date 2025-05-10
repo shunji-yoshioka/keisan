@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import NumberKeyboard from './NumberKeyboard';
 import './App.css';
 
 // 音声ファイルのインポート
@@ -149,6 +150,22 @@ const App: React.FC = () => {
         }, 1000);
     };
 
+    const handleNumberClick = (num: number) => {
+        if (userAnswer.length < 4) {
+            setUserAnswer(prev => prev + num);
+        }
+    };
+
+    const handleDelete = () => {
+        setUserAnswer(prev => prev.slice(0, -1));
+    };
+
+    const handleSubmit = () => {
+        if (userAnswer) {
+            handleAnswerSubmit(new Event('submit'));
+        }
+    };
+
     useEffect(() => {
         let timer: NodeJS.Timeout;
         if (gameState.isPlaying && gameState.timeLeft > 0) {
@@ -219,16 +236,24 @@ const App: React.FC = () => {
                     {currentProblem && (
                         <div className="problem">
                             <h2>{currentProblem.question} = ?</h2>
-                            <form onSubmit={handleAnswerSubmit}>
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                handleAnswerSubmit(e);
+                            }}>
                                 <input
-                                    type="number"
+                                    type="text"
                                     value={userAnswer}
                                     onChange={(e) => setUserAnswer(e.target.value)}
+                                    readOnly
                                     placeholder="答えを入力"
-                                    autoFocus
                                 />
-                                <button type="submit">回答</button>
+                                <div className="answer-display">{userAnswer}</div>
                             </form>
+                            <NumberKeyboard
+                                onNumberClick={handleNumberClick}
+                                onDelete={handleDelete}
+                                onSubmit={handleSubmit}
+                            />
                         </div>
                     )}
                 </div>
