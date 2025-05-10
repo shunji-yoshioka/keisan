@@ -106,8 +106,8 @@ const App: React.FC = () => {
         setCurrentProblem(generateProblem());
     };
 
-    const handleAnswerSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleAnswerSubmit = (e?: React.FormEvent) => {
+        e?.preventDefault();
         if (!currentProblem) return;
 
         const settings = DIFFICULTY_SETTINGS[gameState.difficulty];
@@ -162,7 +162,7 @@ const App: React.FC = () => {
 
     const handleSubmit = () => {
         if (userAnswer) {
-            handleAnswerSubmit(new Event('submit'));
+            handleAnswerSubmit();
         }
     };
 
