@@ -1,32 +1,31 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
+// import isDev from 'electron-is-dev';
+const isDev = process.env.NODE_ENV === 'development' || process.argv.includes('--dev');
+
+let mainWindow: BrowserWindow | null = null;
 
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
-        height: 900,
+        height: 600,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        },
-        resizable: false,
-        fullscreenable: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
     });
 
-    // 開発環境ではwebpack-dev-serverのURLを使用
-    if (process.env.NODE_ENV === 'development') {
-        mainWindow.loadURL('http://localhost:8080');
-        mainWindow.webContents.openDevTools();
-    } else {
-        // 本番環境ではローカルのHTMLファイルを読み込む
-        mainWindow.loadFile(path.join(__dirname, 'index.html'));
-    }
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    mainWindow.webContents.openDevTools();
+
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
 }
 
-// Electronの初期化が完了したらウィンドウを作成
 app.whenReady().then(createWindow);
 
-// すべてのウィンドウが閉じられたらアプリを終了
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
@@ -34,7 +33,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
+    if (mainWindow === null) {
         createWindow();
     }
 }); 

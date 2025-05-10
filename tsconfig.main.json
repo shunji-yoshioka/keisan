@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "esnext",
+    "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
     "outDir": "./dist",
     "rootDir": "./src",
     "moduleResolution": "node",
@@ -14,6 +13,6 @@
     "resolveJsonModule": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/main.ts"],
   "exclude": ["node_modules", "dist"]
 } 

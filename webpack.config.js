@@ -1,27 +1,44 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+const preloadConfig = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-    entry: {
-        main: './src/main.ts',
-        renderer: './src/renderer.tsx'
-    },
-    target: {
-        main: 'electron-main',
-        renderer: 'electron-renderer'
-    },
+    entry: './src/preload.ts',
+    target: 'electron-preload',
     devtool: 'source-map',
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: /node_modules/,
+                exclude: /node_modules/
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'preload.js'
+    }
+};
+
+const rendererConfig = {
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    entry: './src/renderer.tsx',
+    target: 'web',
+    devtool: 'source-map',
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(mp3|wav)$/,
@@ -30,32 +47,23 @@ module.exports = {
                     filename: 'sounds/[name][ext]'
                 }
             }
-        ],
+        ]
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        fallback: {
-            "electron": false
-        }
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: 'renderer.js',
+        library: 'RendererApp',
+        libraryTarget: 'var'
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            filename: 'index.html',
-            chunks: ['renderer']
-        }),
-    ],
-    devServer: {
-        static: {
-            directory: path.join(__dirname, 'public')
-        },
-        compress: true,
-        port: 8080,
-        hot: true,
-        historyApiFallback: true
-    }
-}; 
+            filename: 'index.html'
+        })
+    ]
+};
+
+module.exports = [preloadConfig, rendererConfig]; 

@@ -5,12 +5,15 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "webpack --config webpack.config.js && tsc",
+    "build": "webpack --config webpack.config.js && tsc -p tsconfig.main.json",
     "watch": "webpack --config webpack.config.js --watch",
     "dev": "concurrently \"npm run watch\" \"electron .\"",
     "package": "electron-builder build --mac --win --publish never",
     "package:mac": "electron-builder build --mac --publish never",
-    "package:win": "electron-builder build --win --publish never"
+    "package:win": "electron-builder build --win --publish never",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "Shunji Yoshioka",
   "license": "MIT",
@@ -25,6 +28,7 @@
     "css-loader": "^6.8.1",
     "electron": "^28.3.3",
     "electron-builder": "^24.13.3",
+    "electron-is-dev": "^3.0.1",
     "html-webpack-plugin": "^5.5.3",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.0",
