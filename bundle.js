@@ -1,4 +1,3 @@
-var RendererApp;
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -34830,33 +34829,24 @@ const NumberKeyboard = ({ onNumberClick, onDelete, onSubmit }) => {
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!**************************!*\
-  !*** ./src/renderer.tsx ***!
-  \**************************/
+/*!*********************!*\
+  !*** ./src/web.tsx ***!
+  \*********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./src/components/App.tsx");
 /* harmony import */ var _components_App_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/App.css */ "./src/components/App.css");
-/* harmony import */ var _components_NumberKeyboard_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/NumberKeyboard.css */ "./src/components/NumberKeyboard.css");
 
 
 
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('root');
-    if (!container)
-        throw new Error('Failed to find the root element');
-    const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container);
-    root.render(react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), null,
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
-});
+const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(document.getElementById('root'));
+root.render(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 
 })();
 
-RendererApp = __webpack_exports__;
 /******/ })()
 ;
-//# sourceMappingURL=renderer.js.map
+//# sourceMappingURL=bundle.js.map
