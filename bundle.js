@@ -34440,7 +34440,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const DIFFICULTY_SETTINGS = {
-    easy: { timeLimit: 30, maxNumber: 10, operations: ['+', '-'], scoreMultiplier: 1 },
+    easy: { timeLimit: 300, maxNumber: 10, operations: ['+', '-'], scoreMultiplier: 1 },
     normal: { timeLimit: 30, maxNumber: 20, operations: ['+', '-', '*'], scoreMultiplier: 1.5 },
     hard: { timeLimit: 30, maxNumber: 30, operations: ['+', '-', '*', '/'], scoreMultiplier: 2 },
     expert: { timeLimit: 30, maxNumber: 50, operations: ['+', '-', '*', '/'], scoreMultiplier: 2.5 },
@@ -34457,7 +34457,7 @@ const getEvaluationMessage = (score) => {
     if (score < 50) {
         return { message: 'がんばりましょう', className: 'encourage' };
     }
-    else if (score < 200) {
+    else if (score < 150) {
         return { message: 'いいね！', className: 'good' };
     }
     else {
