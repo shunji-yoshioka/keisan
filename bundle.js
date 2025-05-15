@@ -34703,7 +34703,7 @@ const NumberKeyboard = ({ onNumberClick, onDelete, onSubmit, onsign }) => {
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "keyboard-row" },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key delete-key", onClick: onDelete }, "\u2190"),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key", onClick: () => onNumberClick(0) }, "0"),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key submit-key", onClick: onsign }, "-")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key sign-key", onClick: onsign }, "-")),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "keyboard-row" },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key submit-key", onClick: onSubmit }, "\u56DE\u7B54"))));
 };
