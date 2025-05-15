@@ -34437,11 +34437,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const DIFFICULTY_SETTINGS = {
-    easy: { timeLimit: 300, maxNumber: 10, operations: ['+', '-'], scoreMultiplier: 1 },
-    normal: { timeLimit: 30, maxNumber: 20, operations: ['+', '-', '*'], scoreMultiplier: 1.5 },
-    hard: { timeLimit: 30, maxNumber: 30, operations: ['+', '-', '*', '/'], scoreMultiplier: 2 },
+    easy: { timeLimit: 30, maxNumber: 10, operations: ['+'], scoreMultiplier: 1 },
+    normal: { timeLimit: 30, maxNumber: 20, operations: ['+', '-',], scoreMultiplier: 1.5 },
+    hard: { timeLimit: 30, maxNumber: 30, operations: ['+', '-', '*'], scoreMultiplier: 2 },
     expert: { timeLimit: 30, maxNumber: 50, operations: ['+', '-', '*', '/'], scoreMultiplier: 2.5 },
-    master: { timeLimit: 30, maxNumber: 200, operations: ['+', '-', '*', '/'], scoreMultiplier: 3 }
+    master: { timeLimit: 30, maxNumber: 100, operations: ['+', '-', '*', '/'], scoreMultiplier: 3 }
 };
 const DIFFICULTY_NAMES = {
     easy: 'かんたん',
@@ -34557,6 +34557,14 @@ const App = () => {
     const handleDelete = () => {
         setUserAnswer(prev => prev.slice(0, -1));
     };
+    const handleSign = () => {
+        if (userAnswer.startsWith('-')) {
+            setUserAnswer(prev => prev.slice(1));
+        }
+        else if (userAnswer.length > 0) {
+            setUserAnswer(prev => '-' + prev);
+        }
+    };
     const handleSubmit = () => {
         if (userAnswer) {
             handleAnswerSubmit();
@@ -34611,7 +34619,7 @@ const App = () => {
                     } },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", { type: "text", value: userAnswer, onChange: (e) => setUserAnswer(e.target.value), readOnly: true, placeholder: "\u7B54\u3048\u3092\u5165\u529B" }),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "answer-display" }, userAnswer)),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NumberKeyboard__WEBPACK_IMPORTED_MODULE_1__["default"], { onNumberClick: handleNumberClick, onDelete: handleDelete, onSubmit: handleSubmit })))))));
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NumberKeyboard__WEBPACK_IMPORTED_MODULE_1__["default"], { onNumberClick: handleNumberClick, onDelete: handleDelete, onSubmit: handleSubmit, onsign: handleSign })))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -34687,7 +34695,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NumberKeyboard_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NumberKeyboard.css */ "./src/components/NumberKeyboard.css");
 
 
-const NumberKeyboard = ({ onNumberClick, onDelete, onSubmit }) => {
+const NumberKeyboard = ({ onNumberClick, onDelete, onSubmit, onsign }) => {
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "number-keyboard" },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "keyboard-row" }, [1, 2, 3].map(num => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { key: num, className: "keyboard-key", onClick: () => onNumberClick(num) }, num)))),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "keyboard-row" }, [4, 5, 6].map(num => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { key: num, className: "keyboard-key", onClick: () => onNumberClick(num) }, num)))),
@@ -34695,6 +34703,8 @@ const NumberKeyboard = ({ onNumberClick, onDelete, onSubmit }) => {
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "keyboard-row" },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key delete-key", onClick: onDelete }, "\u2190"),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key", onClick: () => onNumberClick(0) }, "0"),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key submit-key", onClick: onsign }, "-")),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "keyboard-row" },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "keyboard-key submit-key", onClick: onSubmit }, "\u56DE\u7B54"))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NumberKeyboard);
